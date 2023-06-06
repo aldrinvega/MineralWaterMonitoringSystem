@@ -279,3 +279,4 @@ C:\Users\avega\source\repos\MineralWaterMonitoring\obj\Debug\net7.0\refint\Miner
 C:\Users\avega\source\repos\MineralWaterMonitoring\obj\Debug\net7.0\MineralWaterMonitoring.pdb
 C:\Users\avega\source\repos\MineralWaterMonitoring\obj\Debug\net7.0\MineralWaterMonitoring.genruntimeconfig.cache
 C:\Users\avega\source\repos\MineralWaterMonitoring\obj\Debug\net7.0\ref\MineralWaterMonitoring.dll
+C:\Users\avega\source\repos\MineralWaterMonitoring\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

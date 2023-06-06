@@ -1,5 +1,11 @@
+using System.Configuration;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using MineralWaterMonitoring.Data;
 using MineralWaterMonitoring.Features.Users;
 
@@ -10,6 +16,30 @@ builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddMediatR(x => x.RegisterServicesFromAssemblies(typeof(Program).Assembly));
 builder.Services.AddControllers()
     .AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
+//Authentication
+
+builder.Services.AddAuthentication(authOptions =>
+    {
+        authOptions.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        authOptions.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddJwtBearer(jwtOptions =>
+    {
+        var key = builder.Configuration.GetValue<string>("JwtConfig:Key");
+        var keyBytes = Encoding.ASCII.GetBytes(key);
+
+        jwtOptions.SaveToken = true;
+        jwtOptions.RequireHttpsMetadata = false;
+        jwtOptions.TokenValidationParameters = new TokenValidationParameters
+        {
+            IssuerSigningKey = new SymmetricSecurityKey(keyBytes),
+            ValidateLifetime = true,
+            ValidateIssuer = false,
+            ClockSkew = TimeSpan.Zero
+        };
+       
+    });
 
 
 var connectionString = builder.Configuration.GetConnectionString("DevConnection");

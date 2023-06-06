@@ -24,7 +24,7 @@ public class UserController : ControllerBase
         {
            var result = await _mediator.Send(command);
            response.Success = true;
-           response.Data = response;
+           response.Data = result;
            response.Messages.Add("User Added Successfully");
            return Ok(response);
         }
