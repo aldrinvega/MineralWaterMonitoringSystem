@@ -53,5 +53,5 @@ jobs:
         with:
           app-name: 'watermonitoringsystem'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0673684E37AD4F45899499FE0E563A12 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_A3607D29523848EFB3BA87A23389D0AF }}
           package: .
