@@ -38,10 +38,10 @@ public class GroupsController : ControllerBase
     }
 
     [HttpGet(Name = "GetGroups")]
-    public async Task<ActionResult<IEnumerable<GetGroupsAsync.GroupsAsyncQueryResult>>>
+    public async Task<ActionResult<GetGroupsAsync.GroupsAsyncQueryResult>>
         GetGroups()
     {
-        var response = new QueryOrCommandResult<IEnumerable<GetGroupsAsync.GroupsAsyncQueryResult>>();
+        var response = new QueryOrCommandResult<GetGroupsAsync.GroupsAsyncQueryResult>();
         try
         {
             var query = new GetGroupsAsync.GroupsAsyncQuery();

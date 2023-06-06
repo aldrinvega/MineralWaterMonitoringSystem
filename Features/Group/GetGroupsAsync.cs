@@ -10,57 +10,92 @@ namespace MineralWaterMonitoring.Features.Group;
 
 public class GetGroupsAsync
 {
-    public class GroupsAsyncQuery : IRequest<IEnumerable<GroupsAsyncQueryResult>> {}
+    public class GroupsAsyncQuery: IRequest<GroupsAsyncQueryResult> {}
+	
+	
+    public class DTOs
+    {
+        public class Group
+        {
+            public Guid Id
+            {
+                get;
+                set;
+            }
+
+            public string GroupCode
+            {
+                get;
+                set;
+            }
+
+            public string GroupName
+            {
+                get;
+                set;
+            }
+			
+            public ICollection<DTOs.User> User
+            {
+                get;
+                set;
+            }
+        }
+		
+        public class User
+        {
+            public Guid Id
+            {
+                get;
+                set;
+            }
+            public string FullName
+            {
+                get;
+                set;
+            }
+
+        }
+    }
+	
 
     public class GroupsAsyncQueryResult
     {
-        public Guid Id
+        public IEnumerable<DTOs.Group> Groups
         {
             get;
             set;
         }
-
-        public string GroupCode
-        {
-            get;
-            set;
-        }
-
-        public string GroupName
-        {
-            get;
-            set;
-        }
-        public Domain.Users Users
-        {
-            get;
-            set;
-        }
-
     }
-    public class Handler : IRequestHandler<GroupsAsyncQuery, IEnumerable<GroupsAsyncQueryResult>>
+    public class Handler: IRequestHandler<GroupsAsyncQuery, GroupsAsyncQueryResult>
     {
         private readonly IMapper _mapper;
         private readonly DataContext _dataContext;
 
         public Handler(IMapper mapper, DataContext dataContext)
         {
-            _mapper = mapper;
+            _mapper      = mapper;
             _dataContext = dataContext;
         }
 
-        public async Task<IEnumerable<GroupsAsyncQueryResult>> Handle(GroupsAsyncQuery request,
+        public async Task<GroupsAsyncQueryResult> Handle(GroupsAsyncQuery request,
             CancellationToken cancellationToken)
         {
             var groups = await _dataContext.Groups
                 .Include(x => x.UsersCollection)
                 .ToListAsync(cancellationToken);
+				
             if (groups == null)
             {
                 throw new NoGroupsFoundExceptions();
             }
 
-            var result = _mapper.Map<IEnumerable<GroupsAsyncQueryResult>>(groups);
+            var result = new GroupsAsyncQueryResult
+            {
+                Groups = _mapper.Map<IEnumerable<DTOs.Group>>(groups)
+            };
+			
+			
             return result;
         }
     }
