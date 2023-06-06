@@ -54,4 +54,22 @@ public class UserController : ControllerBase
             return Conflict(response);
         }
     }
+
+    [HttpPut("UpdateUser")]
+    public async Task<IActionResult> UpdateUserInformation(
+        [FromBody] UpdateUserInformation.UpdateUserInformationCommand command)
+    {
+        try
+        {
+            await _mediator.Send(command);
+            return Ok($"Information of {command.Fullname} is successfully updated");
+        }
+        catch (Exception e)
+        {
+            return Conflict(new
+            {
+                e.Message
+            });
+        }
+    }
 }
