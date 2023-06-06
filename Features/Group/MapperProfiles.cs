@@ -11,7 +11,7 @@ public class MapperProfiles : Profile
             .ForMember(dest => dest.User, opt => opt.MapFrom(src => src.UsersCollection.Select(u => new GetGroupsAsync.DTOs.User
             {
                 FullName = u.FullName,
-                Id = u.Id
+                Id = u.Id 
             })));
 
     }
