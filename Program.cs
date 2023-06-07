@@ -50,11 +50,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var app = builder.Build();
+var ClientPermission = "_clientPermission";
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("ClientPermission", policy =>
+    options.AddPolicy(name: ClientPermission, policy =>
     {
         policy.AllowAnyOrigin()
             .AllowAnyHeader()
@@ -62,9 +62,12 @@ builder.Services.AddCors(options =>
     });
 });
 
+var app = builder.Build();
+
+
 app.UseSwagger();
 app.UseSwaggerUI();
-
+app.UseCors(ClientPermission);
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
