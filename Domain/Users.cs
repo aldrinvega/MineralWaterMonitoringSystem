@@ -45,4 +45,5 @@ public class Users
         get;
         set;
     }
+    public Roles Roles { get; set; }
 }
