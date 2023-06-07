@@ -11,6 +11,7 @@ using MineralWaterMonitoring.Features.Users;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
 // Add services to the container.
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddMediatR(x => x.RegisterServicesFromAssemblies(typeof(Program).Assembly));
@@ -50,6 +51,16 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("ClientPermission", policy =>
+    {
+        policy.AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
 
 app.UseSwagger();
 app.UseSwaggerUI();

@@ -1,10 +1,8 @@
-﻿using System.Runtime.CompilerServices;
-using AutoMapper;
+﻿using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using MineralWaterMonitoring.Data;
 using MineralWaterMonitoring.Features.Group.Execptions;
-using MineralWaterMonitoring.Features.Users;
 
 namespace MineralWaterMonitoring.Features.Group;
 
@@ -57,8 +55,7 @@ public class GetGroupsAsync
 
         }
     }
-	
-
+    
     public class GroupsAsyncQueryResult
     {
         public IEnumerable<DTOs.Group> Groups
@@ -94,8 +91,7 @@ public class GetGroupsAsync
             {
                 Groups = _mapper.Map<IEnumerable<DTOs.Group>>(groups)
             };
-			
-			
+            
             return result;
         }
     }
