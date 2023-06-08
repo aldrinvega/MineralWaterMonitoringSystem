@@ -104,20 +104,20 @@ public class AuthenticateUser
                 _mapper = mapper;
             }
 
-            public async Task<AuthenticateUserResult> Handle(AuthenticateUserQuery command,
+            public Task<AuthenticateUserResult> Handle(AuthenticateUserQuery command,
                 CancellationToken cancellationToken)
             {
                 var user = _context.Users.Include(x => x.Group).SingleOrDefault(x => x.UserName == command.Username
                     && x.Password == command.Password);
                 if (user == null)
                     throw new NoUsersFoundException();
-                var token = generateJwtToken(user);
+                var token = GenerateJwtToken(user);
                 var result = new AuthenticateUserResult(user, token);
                 var results = _mapper.Map<AuthenticateUserResult>(result) ;
-                return results;
+                return Task.FromResult(results);
             }
 
-            private string generateJwtToken(Domain.Users user)
+            private string GenerateJwtToken(Domain.Users user)
             {
                 var key = _configuration.GetValue<string>("JwtConfig:Key");
                 var keyBytes = Encoding.ASCII.GetBytes(key);

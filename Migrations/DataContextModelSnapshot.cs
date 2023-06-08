@@ -43,22 +43,27 @@ namespace MineralWaterMonitoring.Migrations
                     b.ToTable("Groups");
                 });
 
-            modelBuilder.Entity("MineralWaterMonitoring.Domain.Roles", b =>
+            modelBuilder.Entity("MineralWaterMonitoring.Domain.Payers", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasColumnName("RolesId");
+                        .HasColumnName("PayerId");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("RoleName")
+                    b.Property<string>("Fullname")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("GroupId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles");
+                    b.HasIndex("GroupId");
+
+                    b.ToTable("Payers");
                 });
 
             modelBuilder.Entity("MineralWaterMonitoring.Domain.Users", b =>
@@ -77,9 +82,6 @@ namespace MineralWaterMonitoring.Migrations
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("RolesId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("UserCode")
                         .HasColumnType("nvarchar(max)");
 
@@ -90,9 +92,18 @@ namespace MineralWaterMonitoring.Migrations
 
                     b.HasIndex("GroupId");
 
-                    b.HasIndex("RolesId");
-
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("MineralWaterMonitoring.Domain.Payers", b =>
+                {
+                    b.HasOne("MineralWaterMonitoring.Domain.Groups", "Groups")
+                        .WithMany()
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Groups");
                 });
 
             modelBuilder.Entity("MineralWaterMonitoring.Domain.Users", b =>
@@ -103,23 +114,12 @@ namespace MineralWaterMonitoring.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MineralWaterMonitoring.Domain.Roles", "Roles")
-                        .WithMany("Users")
-                        .HasForeignKey("RolesId");
-
                     b.Navigation("Group");
-
-                    b.Navigation("Roles");
                 });
 
             modelBuilder.Entity("MineralWaterMonitoring.Domain.Groups", b =>
                 {
                     b.Navigation("UsersCollection");
-                });
-
-            modelBuilder.Entity("MineralWaterMonitoring.Domain.Roles", b =>
-                {
-                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }

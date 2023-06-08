@@ -53,7 +53,7 @@ public class UpdateUserInformation
             {
                 var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == command.Id, cancellationToken);
 
-                if (command.GroupId != null)
+                if (true)
                 {
                     var groups = await _context.Groups.FirstOrDefaultAsync(x => x.Id == command.GroupId, cancellationToken);
                     if (groups == null)
