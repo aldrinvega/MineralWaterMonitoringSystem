@@ -30,7 +30,7 @@ public class AddNewGroup
 
         public async Task<Unit> Handle(AddNewGroupCommand command, CancellationToken cancellationToken)
         {
-            var groupExist = await _dataContext.Groups.FirstOrDefaultAsync(x => x.GroupName == command.GroupName);
+            var groupExist = await _dataContext.Groups.FirstOrDefaultAsync(x => x.GroupName == command.GroupName, cancellationToken);
 
             if (groupExist != null)
             {

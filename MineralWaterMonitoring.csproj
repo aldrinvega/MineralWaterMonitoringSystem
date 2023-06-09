@@ -27,8 +27,7 @@
 
   <ItemGroup>
     <Folder Include="Controllers\" />
-    <Folder Include="Features\Collections\Exceptions\" />
-    <Folder Include="Features\Contributions\" />
+    <Folder Include="Features\Contributions\Exceptions\" />
   </ItemGroup>
 
 </Project>

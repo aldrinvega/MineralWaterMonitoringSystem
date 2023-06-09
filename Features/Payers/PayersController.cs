@@ -16,6 +16,7 @@ public class PayersController : ControllerBase
    {
       _mediator = mediator;
    }
+   
    [HttpGet(Name = "GetAllPayer")]
    public async Task<ActionResult<GetPayersAsync.GetPayersAsyncQueryResult>>
       GetAllPayers()
@@ -56,7 +57,7 @@ public class PayersController : ControllerBase
       }
    }
 
-   [HttpPut("AddCash")]
+   [HttpPatch("AddCash")]
    public async Task<IActionResult> AddCash(AddCash.AddCashCommand command)
    {
       var response = new QueryOrCommandResult<Unit>();
@@ -75,5 +76,17 @@ public class PayersController : ControllerBase
       }
    }
 
-   
+   [HttpPatch("UpdateBalance")]
+   public async Task<IActionResult> UpdateBalance(UpdateBalance.UpdateBalanceCommand command)
+   {
+      try
+      {
+         await _mediator.Send(command);
+         return Ok("Balance updated");
+      }
+      catch (Exception e)
+      {
+         return Conflict(e.Message);
+      }
+   }
 }

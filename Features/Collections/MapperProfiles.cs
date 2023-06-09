@@ -1,6 +1,13 @@
-﻿namespace MineralWaterMonitoring.Features.Collections;
+﻿using AutoMapper;
+using MineralWaterMonitoring.Domain;
 
-public class MapperProfiles
+namespace MineralWaterMonitoring.Features.Collections;
+
+public class MapperProfiles : Profile
 {
-    
+    public MapperProfiles()
+    {
+        CreateMap<Collection, GetCollectionsAsync.GetCollectionsAsyncQueryResult>()
+            .ForMember(dest => dest.GroupName, opt => opt.MapFrom(src => src.Groups.GroupName));
+    }
 }
