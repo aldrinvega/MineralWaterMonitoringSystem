@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using MineralWaterMonitoring.Common;
+using MineralWaterMonitoring.Features.Payers.Exceptions;
 
 namespace MineralWaterMonitoring.Features.Payers;
 
@@ -52,6 +53,25 @@ public class PayersController : ControllerBase
          {
             e.Message
          });
+      }
+   }
+
+   [HttpPut("AddCash")]
+   public async Task<IActionResult> AddCash(AddCash.AddCashCommand command)
+   {
+      var response = new QueryOrCommandResult<Unit>();
+      try
+      {
+         await _mediator.Send(command);
+         response.Success = true;
+         response.Messages.Add("Transaction complete");
+         return Ok(response);
+      }
+      catch (Exception e)
+      {
+         response.Success = false;
+         response.Messages.Add(e.Message);
+         return Conflict(response);
       }
    }
 

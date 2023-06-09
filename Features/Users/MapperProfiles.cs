@@ -6,8 +6,6 @@ public class MapperProfiles : Profile
 {
     public MapperProfiles()
     {
-        CreateMap<Domain.Users, GetUsersAsync.UsersAsyncQueryResult>()
-            .ForMember(dest => dest.GroupCode, opt => opt.MapFrom(src => src.Group.GroupCode))
-            .ForMember(dest => dest.GroupName, opt => opt.MapFrom(src => src.Group.GroupName));
+        CreateMap<Domain.Users, GetUsersAsync.UsersAsyncQueryResult>();
     }
 }

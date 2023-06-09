@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MineralWaterMonitoring.Data;
 
@@ -11,9 +12,11 @@ using MineralWaterMonitoring.Data;
 namespace MineralWaterMonitoring.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230609011226_AdjustDatabase")]
+    partial class AdjustDatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,11 +55,11 @@ namespace MineralWaterMonitoring.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("ContributionId");
 
+                    b.Property<int>("CollectionAmount")
+                        .HasColumnType("int");
+
                     b.Property<Guid>("CollectionId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("ContributionAmount")
-                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");

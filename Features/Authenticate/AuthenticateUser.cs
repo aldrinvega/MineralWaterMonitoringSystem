@@ -85,9 +85,6 @@ public class AuthenticateUser
             Fullname = user.FullName;
             Username = user.UserName;
             Password = user.Password;
-            GroupId = user.GroupId;
-            GroupCode = user.Group.GroupCode;
-            GroupName = user.Group.GroupName;
             Token = token;
         }
 
@@ -107,7 +104,7 @@ public class AuthenticateUser
             public Task<AuthenticateUserResult> Handle(AuthenticateUserQuery command,
                 CancellationToken cancellationToken)
             {
-                var user = _context.Users.Include(x => x.Group).SingleOrDefault(x => x.UserName == command.Username
+                var user = _context.Users.SingleOrDefault(x => x.UserName == command.Username
                     && x.Password == command.Password);
                 if (user == null)
                     throw new NoUsersFoundException();

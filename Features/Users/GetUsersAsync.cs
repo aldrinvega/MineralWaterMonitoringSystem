@@ -13,36 +13,14 @@ public class GetUsersAsync
 
     public class UsersAsyncQueryResult
     {
-        public Guid Id
-        {
-            get;
-            set;
-        }
+        public Guid Id { get; set; }
 
-        public string Fullname
-        {
-            get;
-            set;
-        }
+        public string Fullname { get; set; }
 
-        public string UserName
-        {
-            get;
-            set;
-        }
+        public string UserName { get; set; }
+    }
 
-        public string GroupCode
-        {
-            get;
-            set;
-        }
-        public string GroupName
-        {
-            get;
-            set;
-        }
-
-        public class Handler : IRequestHandler<UsersAsyncQuery, IEnumerable<UsersAsyncQueryResult>>
+    public class Handler : IRequestHandler<UsersAsyncQuery, IEnumerable<UsersAsyncQueryResult>>
         {
             private readonly IMapper _mapper;
             private readonly DataContext _dataContext;
@@ -57,7 +35,6 @@ public class GetUsersAsync
                 CancellationToken cancellationToken)
             {
                 var user = await _dataContext.Users
-                    .Include(p => p.Group)
                     .ToListAsync(cancellationToken);
                 if (user == null)
                 {
@@ -69,5 +46,4 @@ public class GetUsersAsync
 
             }
         }
-    }
 }

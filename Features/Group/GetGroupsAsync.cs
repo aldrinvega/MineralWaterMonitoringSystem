@@ -79,7 +79,7 @@ public class GetGroupsAsync
             CancellationToken cancellationToken)
         {
             var groups = await _dataContext.Groups
-                .Include(x => x.UsersCollection)
+                .Include(x => x.Payers)
                 .ToListAsync(cancellationToken);
 				
             if (groups == null)

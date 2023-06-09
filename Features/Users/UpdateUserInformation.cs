@@ -34,12 +34,6 @@ public class UpdateUserInformation
             set;
         }
 
-        public Guid GroupId
-        {
-            get;
-            set;
-        }
-
         public class Handler : IRequestHandler<UpdateUserInformationCommand, Unit>
         {
             private DataContext _context;
@@ -52,20 +46,13 @@ public class UpdateUserInformation
             public async Task<Unit> Handle(UpdateUserInformationCommand command, CancellationToken cancellationToken)
             {
                 var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == command.Id, cancellationToken);
-
-                if (true)
-                {
-                    var groups = await _context.Groups.FirstOrDefaultAsync(x => x.Id == command.GroupId, cancellationToken);
-                    if (groups == null)
-                        throw new NoGroupsFoundExceptions();
-                }
+                
                 if (user == null)
                     throw new NoUsersFoundException();
                 user.FullName = command.Fullname;
                 user.UserName = command.Username;
                 user.Password = command.Password;
-                user.GroupId = command.GroupId;
-
+                
                 await _context.SaveChangesAsync(cancellationToken);
                 return Unit.Value;
 
