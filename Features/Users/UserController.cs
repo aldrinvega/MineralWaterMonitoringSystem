@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using MineralWaterMonitoring.Common;
 
@@ -34,7 +35,7 @@ public class UserController : ControllerBase
         }
     }
 
-    [HttpGet(Name = "GetAllUsers")]
+    [HttpGet("GetAllUsers")]
     public async Task<ActionResult<IEnumerable<GetUsersAsync.UsersAsyncQueryResult>>>
         GetAllUsersAsync()
     {
@@ -63,6 +64,23 @@ public class UserController : ControllerBase
         {
             await _mediator.Send(command);
             return Ok($"Information of {command.Fullname} is successfully updated");
+        }
+        catch (Exception e)
+        {
+            return Conflict(new
+            {
+                e.Message
+            });
+        }
+    }
+
+    [HttpPatch("UpdateUserStatus")]
+    public async Task<IActionResult> UpdateUserStatus([FromBody] UpdateUserStatus.UpdateUserStatusCommand command)
+    {
+        try
+        {
+            await _mediator.Send(command);
+            return Ok($"User successfully {command.Status}");
         }
         catch (Exception e)
         {

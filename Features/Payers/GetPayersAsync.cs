@@ -16,6 +16,7 @@ public class GetPayersAsync
         public string Fullname { get; set; }
         public string GroupCode { get; set; }
         public string GroupName { get; set; }
+        public int Balance { get; set; }
     }
     public class Handler : IRequestHandler<GetPayersAsyncQuery, IEnumerable<GetPayersAsyncQueryResult>>
     {
