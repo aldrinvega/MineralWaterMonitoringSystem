@@ -9,18 +9,11 @@ public abstract class AddNewUser
 {
     public class AddNewUserCommand : IRequest<Unit>
     {
-        public AddNewUserCommand(string fullName, string userName, string password)
-        {
-            FullName = fullName;
-            UserName = userName;
-            Password = password;
-        }
+        private string FullName { get; set;}
 
-        private string FullName { get;}
+        private string UserName { get; set;}
 
-        private string UserName { get;}
-
-        private string Password { get;}
+        private string Password { get; set;}
         
 
         public class Handler : IRequestHandler<AddNewUserCommand, Unit>
