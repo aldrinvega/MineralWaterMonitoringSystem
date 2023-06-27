@@ -14,6 +14,7 @@ public class AddNewUser
         public string UserName { get; set; }
 
         public string Password { get; set; }
+        public bool Status { get; set; }
     }
 
     public class Handler : IRequestHandler<AddNewUserCommand, Unit>
@@ -38,8 +39,10 @@ public class AddNewUser
                 {
                     FullName = command.FullName,
                     UserName = command.UserName,
-                    Password = command.Password
+                    Password = command.Password,
+                    Status = true
                 };
+                
                 await _dataContext.Users.AddAsync(users, cancellationToken);
                 await _dataContext.SaveChangesAsync(cancellationToken);
 
