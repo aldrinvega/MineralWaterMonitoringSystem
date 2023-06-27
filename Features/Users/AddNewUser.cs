@@ -5,18 +5,18 @@ using MineralWaterMonitoring.Features.Exceptions;
 
 namespace MineralWaterMonitoring.Features.Users;
 
-public abstract class AddNewUser
+public class AddNewUser
 {
     public class AddNewUserCommand : IRequest<Unit>
     {
-        private string FullName { get; set;}
+        public string FullName { get; set; }
 
-        private string UserName { get; set;}
+        public string UserName { get; set; }
 
-        private string Password { get; set;}
-        
+        public string Password { get; set; }
+    }
 
-        public class Handler : IRequestHandler<AddNewUserCommand, Unit>
+    public class Handler : IRequestHandler<AddNewUserCommand, Unit>
         {
             private readonly DataContext _dataContext;
 
@@ -47,5 +47,5 @@ public abstract class AddNewUser
 
             }
         }
-    }
+    
 }
