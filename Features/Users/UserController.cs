@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using MineralWaterMonitoring.Common;
+using MineralWaterMonitoring.Common.Extension;
+using MineralWaterMonitoring.Common.Pagination;
 
 namespace MineralWaterMonitoring.Features.Users;
 
@@ -36,29 +38,40 @@ public class UserController : ControllerBase
     }
 
     [HttpGet("GetAllUsers")]
-    public async Task<ActionResult<IEnumerable<GetUsersAsync.UsersAsyncQueryResult>>>
-        GetAllUsersAsync()
+    public async Task<IActionResult> GetAllUsersAsync([FromQuery] UserParams userParams)
     {
-        var response = new QueryOrCommandResult<IEnumerable<GetUsersAsync.UsersAsyncQueryResult>>();
         try
         {
-            var query = new GetUsersAsync.UsersAsyncQuery();
-            var result = await _mediator.Send(query);
-            response.Success = true;
-            response.Data = result;
-            return Ok(response);
+            var query = new GetUsersAsync.UsersAsyncQuery
+            {
+                PageNumber = userParams.PageNumber,
+                PageSize = userParams.PageSize
+            };
+            var users = await _mediator.Send(query);
+
+            Response.AddPaginationHeader(users.CurrentPage, users.TotalCount, users.TotalPages, users.PageSize, users.HasNextPage, users.HasPreviousPage);
+
+            var result = new
+            {
+                users,
+                users.PageSize,
+                users.CurrentPage,
+                users.TotalCount,
+                users.TotalPages,
+                users.HasPreviousPage,
+                users.HasNextPage
+            };
+
+            return Ok(result);
         }
         catch (Exception e)
         {
-            response.Success = false;
-            response.Messages.Add(e.Message);
-            return Conflict(response);
+            return Conflict(new { message = e.Message });
         }
     }
 
     [HttpPut("UpdateUser")]
-    public async Task<IActionResult> UpdateUserInformation(
-        [FromBody] UpdateUserInformation.UpdateUserInformationCommand command)
+    public async Task<IActionResult> UpdateUserInformation([FromBody] UpdateUserInformation.UpdateUserInformationCommand command)
     {
         try
         {

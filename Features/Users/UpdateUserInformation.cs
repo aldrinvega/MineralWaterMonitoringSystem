@@ -55,8 +55,7 @@ public class UpdateUserInformation
                 
                 await _context.SaveChangesAsync(cancellationToken);
                 return Unit.Value;
-
-
+                
             }
         }
     }

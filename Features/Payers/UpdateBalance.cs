@@ -25,7 +25,7 @@ public abstract class UpdateBalance
         {
             var contribution = await _context.Contributions.FirstOrDefaultAsync(x => x.Id == command.ContributionId, cancellationToken);
             var user = await _context.Payers.FirstOrDefaultAsync(x => x.Id == command.PayerId, cancellationToken);
-            var remainingBalance = contribution.ContributionAmount - user.Balance;
+            var remainingBalance = user.Balance - contribution.ContributionAmount;
             user.Balance = remainingBalance;
             await _context.SaveChangesAsync(cancellationToken);
             return Unit.Value;

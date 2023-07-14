@@ -93,6 +93,14 @@
               "target": "Package",
               "version": "[7.0.6, )"
             },
+            "MySql.Data": {
+              "target": "Package",
+              "version": "[8.0.33, )"
+            },
+            "MySql.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[7.0.2, )"
+            },
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[13.0.3, )"

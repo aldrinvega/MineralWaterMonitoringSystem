@@ -280,3 +280,15 @@ C:\Users\avega\source\repos\MineralWaterMonitoring\obj\Debug\net7.0\refint\Miner
 C:\Users\avega\source\repos\MineralWaterMonitoring\obj\Debug\net7.0\MineralWaterMonitoring.pdb
 C:\Users\avega\source\repos\MineralWaterMonitoring\obj\Debug\net7.0\MineralWaterMonitoring.genruntimeconfig.cache
 C:\Users\avega\source\repos\MineralWaterMonitoring\obj\Debug\net7.0\ref\MineralWaterMonitoring.dll
+C:\Users\avega\source\repos\MineralWaterMonitoring\bin\Debug\net7.0\Google.Protobuf.dll
+C:\Users\avega\source\repos\MineralWaterMonitoring\bin\Debug\net7.0\K4os.Compression.LZ4.dll
+C:\Users\avega\source\repos\MineralWaterMonitoring\bin\Debug\net7.0\K4os.Compression.LZ4.Streams.dll
+C:\Users\avega\source\repos\MineralWaterMonitoring\bin\Debug\net7.0\K4os.Hash.xxHash.dll
+C:\Users\avega\source\repos\MineralWaterMonitoring\bin\Debug\net7.0\MySql.Data.dll
+C:\Users\avega\source\repos\MineralWaterMonitoring\bin\Debug\net7.0\MySql.EntityFrameworkCore.dll
+C:\Users\avega\source\repos\MineralWaterMonitoring\bin\Debug\net7.0\BouncyCastle.Crypto.dll
+C:\Users\avega\source\repos\MineralWaterMonitoring\bin\Debug\net7.0\runtimes\win-x64\native\comerr64.dll
+C:\Users\avega\source\repos\MineralWaterMonitoring\bin\Debug\net7.0\runtimes\win-x64\native\gssapi64.dll
+C:\Users\avega\source\repos\MineralWaterMonitoring\bin\Debug\net7.0\runtimes\win-x64\native\k5sprt64.dll
+C:\Users\avega\source\repos\MineralWaterMonitoring\bin\Debug\net7.0\runtimes\win-x64\native\krb5_64.dll
+C:\Users\avega\source\repos\MineralWaterMonitoring\bin\Debug\net7.0\runtimes\win-x64\native\krbcc64.dll

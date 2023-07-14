@@ -7,12 +7,22 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MineralWaterMonitoring.Data;
+using MineralWaterMonitoring.Features.Contributions;
 using MineralWaterMonitoring.Features.Users;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
 // Add services to the container.
+builder.Services.AddMediatR(cfg =>
+{
+    cfg.RegisterServicesFromAssemblies(new[]
+    {
+        typeof(Program).Assembly,
+        typeof(GetContributionsAsync.GetContributionsAsyncQuery).Assembly
+        // Add other assemblies as needed
+    });
+});
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddMediatR(x => x.RegisterServicesFromAssemblies(typeof(Program).Assembly));
 builder.Services.AddControllers()
@@ -44,10 +54,10 @@ builder.Services.AddAuthentication(authOptions =>
 
 
 var connectionString = builder.Configuration.GetConnectionString("DevConnection");
-builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer(connectionString));
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddDbContext<DataContext>(x => x.UseMySQL(connectionString));
+builder.Services.AddControllers(); //aka.ms/aspnetcore/swashbuckle
+                                  builder.Services.AddEndpointsApiExplorer();
+// Learn more about configuring Swagger/OpenAPI at https
 builder.Services.AddSwaggerGen();
 
 var ClientPermission = "_clientPermission";
