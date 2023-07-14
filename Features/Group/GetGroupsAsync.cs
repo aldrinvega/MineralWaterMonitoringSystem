@@ -1,14 +1,17 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using MineralWaterMonitoring.Common.Pagination;
 using MineralWaterMonitoring.Data;
 using MineralWaterMonitoring.Features.Group.Execptions;
+using MineralWaterMonitoring.Features.Users;
 
 namespace MineralWaterMonitoring.Features.Group;
 
 public class GetGroupsAsync
 {
-    public class GroupsAsyncQuery: IRequest<GroupsAsyncQueryResult> {}
+    public class GroupsAsyncQuery : UserParams, IRequest<GroupsAsyncQueryResult> {}
 	
 	
     public class DTOs
@@ -33,14 +36,14 @@ public class GetGroupsAsync
                 set;
             }
 			
-            public ICollection<DTOs.User> User
+            public ICollection<Payers> Payers
             {
                 get;
                 set;
             }
         }
 		
-        public class User
+        public class Payers
         {
             public Guid Id
             {
@@ -58,7 +61,7 @@ public class GetGroupsAsync
     
     public class GroupsAsyncQueryResult
     {
-        public IEnumerable<DTOs.Group> Groups
+        public PagedList<DTOs.Group> Groups
         {
             get;
             set;
@@ -78,21 +81,26 @@ public class GetGroupsAsync
         public async Task<GroupsAsyncQueryResult> Handle(GroupsAsyncQuery request,
             CancellationToken cancellationToken)
         {
-            var groups = await _dataContext.Groups
+            // var groups = await _dataContext.Groups
+            //     .Include(x => x.Payers)
+            //     .ToListAsync(cancellationToken);
+            
+            var groupsQuery = _dataContext.Groups
                 .Include(x => x.Payers)
-                .ToListAsync(cancellationToken);
+                .ProjectTo<GetGroupsAsync.DTOs.Group>(_mapper.ConfigurationProvider)
+                .AsNoTracking();
+            
+            var groups = await PagedList<GetGroupsAsync.DTOs.Group>.CreateAsync(groupsQuery, request.PageNumber, request.PageSize);
 				
             if (groups == null)
             {
                 throw new NoGroupsFoundExceptions();
             }
 
-            var result = new GroupsAsyncQueryResult
+            return new GroupsAsyncQueryResult
             {
-                Groups = _mapper.Map<IEnumerable<DTOs.Group>>(groups)
+                Groups = groups
             };
-            
-            return result;
         }
     }
    

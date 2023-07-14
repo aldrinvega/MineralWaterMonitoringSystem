@@ -1,13 +1,16 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Azure;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using MineralWaterMonitoring.Common.Pagination;
 using MineralWaterMonitoring.Data;
 
 namespace MineralWaterMonitoring.Features.Contributions;
 
 public class GetContributionsAsync
 {
-    public class GetContributionsAsyncQuery : IRequest<IEnumerable<GetContributionsAsyncResult>> { }
+    public class GetContributionsAsyncQuery : UserParams, IRequest<PagedList<GetContributionsAsyncResult>> { }
 
     public class GetContributionsAsyncResult
     {
@@ -18,7 +21,7 @@ public class GetContributionsAsync
         public int ContributionAmount { get; set; }
     }
 
-    public class Handler : IRequestHandler<GetContributionsAsyncQuery, IEnumerable<GetContributionsAsyncResult>>
+    public class Handler : IRequestHandler<GetContributionsAsyncQuery, PagedList<GetContributionsAsyncResult>>
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
@@ -29,13 +32,22 @@ public class GetContributionsAsync
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<GetContributionsAsyncResult>> Handle(GetContributionsAsyncQuery request, CancellationToken cancellationToken)
+        // Pagination is applied here
+        public async Task<PagedList<GetContributionsAsyncResult>> Handle(GetContributionsAsyncQuery request, CancellationToken cancellationToken)
         {
-            var contributions = await _context.Contributions
+            var contributions = _context.Contributions
                 .Include(payers => payers.Payer)
-                .ToListAsync(cancellationToken);
-            var result = _mapper.Map<IEnumerable<GetContributionsAsyncResult>>(contributions);
-            return  result;
+                .ProjectTo<GetContributionsAsyncResult>(_mapper.ConfigurationProvider)
+                .AsNoTracking();
+
+            // Create a paged list based on the page number and page size from the request
+            var result = await PagedList<GetContributionsAsyncResult>
+                .CreateAsync(
+                    contributions,
+                    request.PageNumber,
+                    request.PageSize
+                );
+            return result;
         }
     }
 }

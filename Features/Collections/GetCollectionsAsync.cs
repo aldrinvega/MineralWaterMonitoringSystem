@@ -16,6 +16,7 @@ public class GetCollectionsAsync
         public string CreatedAt { get; set; }
         public string GroupName { get; set; }
         public int CollectionAmount { get; set; }
+        public int CollectedAmount { get; set; }
     }
     
     public class Handler : IRequestHandler<GetCollectionsAsyncQuery, IEnumerable<GetCollectionsAsyncQueryResult>>
@@ -33,6 +34,8 @@ public class GetCollectionsAsync
         {
             var collections = await _context.Collections
                 .Include(group => group.Groups)
+                .ThenInclude(group => group.Payers)
+                    .ThenInclude(payer => payer.Contributions)
                 .ToListAsync(cancellationToken);
 
             if (collections == null) throw new NoCollectionFoundExceptions();

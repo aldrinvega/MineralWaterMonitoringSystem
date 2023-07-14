@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using MineralWaterMonitoring.Data;
 
 namespace MineralWaterMonitoring.Features.Contributions;
@@ -22,6 +23,15 @@ public class AddContribution
 
         public async Task<Unit> Handle(AddContributionCommand command, CancellationToken cancellationToken)
         {
+
+            var collection = await _context.Collections.FirstOrDefaultAsync(x => x.Id == command.CollectionId, cancellationToken);
+            var contributionSum = _context.Contributions.Where(x => x.CollectionId == command.CollectionId)
+                .Sum(x => x.ContributionAmount);
+            if (collection.CollectionAmount == contributionSum)
+            {
+                throw new Exception("Amount is already collected");
+            }
+            
             var contributions = new Domain.Contributions()
             {
                 CollectionId = command.CollectionId,

@@ -47,7 +47,7 @@ public class CollectionController : ControllerBase
             return Ok(response);
         }
         catch (Exception e)
-        {
+        { 
             response.Success = false;
             response.Messages.Add(e.Message);
             return Conflict(response);

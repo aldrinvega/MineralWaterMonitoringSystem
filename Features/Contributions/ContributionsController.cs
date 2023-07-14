@@ -1,6 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using MineralWaterMonitoring.Common;
+using MineralWaterMonitoring.Common.Extension;
+using MineralWaterMonitoring.Common.Pagination;
 
 namespace MineralWaterMonitoring.Features.Contributions;
 
@@ -29,28 +31,51 @@ public class ContributionsController : ControllerBase
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            throw;
+            response.Success = false;
+            response.Messages.Add(e.Message);
+            return Conflict(response);
         }
     }
 
-    [HttpGet(Name = "GetContributionsAsync")]
-    public async Task<ActionResult<GetContributionsAsync.GetContributionsAsyncResult>> GetContributionsAsync()
+   [HttpGet(Name = "GetContributionsAsync")]
+    public async Task<ActionResult<GetContributionsAsync.GetContributionsAsyncResult>> GetContributionsAsync([FromQuery] UserParams userParams)
     {
-        var response = new QueryOrCommandResult<IEnumerable<GetContributionsAsync.GetContributionsAsyncResult>>();
-        try
-        {
-            var query = new GetContributionsAsync.GetContributionsAsyncQuery();
-            var result = await _mediator.Send(query);
-            response.Success = true;
-            response.Data = result;
-            return Ok(response);
-        }
-        catch (Exception e)
-        { 
-            response.Success = false;
-           response.Messages.Add(e.Message);
-           return Conflict(response);
-        }
+                    try
+                    {
+                        var query = new GetContributionsAsync.GetContributionsAsyncQuery
+                        {
+                            PageSize = userParams.PageSize,
+                            PageNumber = userParams.PageNumber
+                        };
+                
+                        var contributions = await _mediator.Send(query);
+                
+                        Response.AddPaginationHeader(
+                            contributions.CurrentPage,
+                            contributions.PageSize,
+                            contributions.TotalCount,
+                            contributions.TotalPages,
+                            contributions.HasPreviousPage,
+                            contributions.HasNextPage);
+
+                        var result = new
+                        {
+                            contributions,
+                            contributions.CurrentPage,
+                            contributions.PageSize,
+                            contributions.TotalCount,
+                            contributions.TotalPages,
+                            contributions.HasPreviousPage,
+                            contributions.HasNextPage
+                        };
+                                
+                        return Ok(result); 
+                    }
+                    catch (Exception e)
+                    { 
+                        var response = new { Success = false, Messages = new List<string> { e.Message } };
+                        return Conflict(response);
+                    }
+                    
     }
 }

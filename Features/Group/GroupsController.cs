@@ -1,6 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using MineralWaterMonitoring.Common;
+using MineralWaterMonitoring.Common.Extension;
+using MineralWaterMonitoring.Common.Pagination;
 using NuGet.Protocol;
 
 namespace MineralWaterMonitoring.Features.Group;
@@ -38,26 +40,40 @@ public class GroupsController : ControllerBase
     }
 
     [HttpGet(Name = "GetGroups")]
-    public async Task<ActionResult<GetGroupsAsync.GroupsAsyncQueryResult>>
-        GetGroups()
+    public async Task<ActionResult> GetGroups([FromQuery] UserParams userParams)
     {
-        var response = new QueryOrCommandResult<GetGroupsAsync.GroupsAsyncQueryResult>();
         try
         {
-            var query = new GetGroupsAsync.GroupsAsyncQuery();
-            var result = await _mediator.Send(query);
+            var query = new GetGroupsAsync.GroupsAsyncQuery
+            {
+                PageNumber = userParams.PageNumber,
+                PageSize = userParams.PageSize
+            };
+            var groups = await _mediator.Send(query);
 
-            response.Success = true;
-            response.Data = result;
-            return Ok(response);
+            Response.AddPaginationHeader(
+                groups.Groups.CurrentPage,
+                groups.Groups.TotalCount,
+                groups.Groups.TotalPages,
+                groups.Groups.PageSize,
+                groups.Groups.HasNextPage,
+                groups.Groups.HasPreviousPage
+            );
+            var result = new
+            {
+                groups = groups.Groups,
+                pageSize = groups.Groups.PageSize,
+                currentPage = groups.Groups.CurrentPage,
+                totalCount = groups.Groups.TotalCount,
+                totalPages = groups.Groups.TotalPages,
+                hasPreviousPage = groups.Groups.HasPreviousPage,
+                hasNextPage = groups.Groups.HasNextPage
+            };
+            return Ok(result);
         }
         catch (Exception e)
         {
-            response.Success = false;
-            response.Messages.Add(e.Message);
-            return Conflict(response);
+            return Conflict(new { message = e.Message });
         }
-        
     }
-    
 }

@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MineralWaterMonitoring.Common;
 
 namespace MineralWaterMonitoring.Features.Authenticate;
 [Route("api/[controller]")]
@@ -17,13 +18,16 @@ public class AuthenticateController : ControllerBase
 
     [AllowAnonymous]
     [HttpPost("Authenticate")]
-    public IActionResult Authenticate(AuthenticateUser.AuthenticateUserQuery request)
+    public async Task<ActionResult<AuthenticateUser.AuthenticateUserResult>> Authenticate(AuthenticateUser.AuthenticateUserQuery request)
     {
+
+        var response = new QueryOrCommandResult<AuthenticateUser.AuthenticateUserResult>();
         try
         {
-            var query = new AuthenticateUser.AuthenticateUserQuery();
-            var result = _mediator.Send(request);
-            return Ok(result);
+            // var query = new AuthenticateUser.AuthenticateUserQuery();
+            var result = await _mediator.Send(request);
+            response.Data = result;
+            return Ok(response);
         }
         catch (Exception e)
         {

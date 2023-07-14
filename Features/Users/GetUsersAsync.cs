@@ -1,15 +1,16 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using MineralWaterMonitoring.Common.Pagination;
 using MineralWaterMonitoring.Data;
-using MineralWaterMonitoring.Domain;
 using MineralWaterMonitoring.Features.Users.Exceptions;
 
 namespace MineralWaterMonitoring.Features.Users;
 
 public class GetUsersAsync
 {
-    public class UsersAsyncQuery : IRequest<IEnumerable<UsersAsyncQueryResult>>{}
+    public class UsersAsyncQuery : UserParams, IRequest<PagedList<UsersAsyncQueryResult>>{}
 
     public class UsersAsyncQueryResult
     {
@@ -20,7 +21,7 @@ public class GetUsersAsync
         public string UserName { get; set; }
     }
 
-    public class Handler : IRequestHandler<UsersAsyncQuery, IEnumerable<UsersAsyncQueryResult>>
+    public class Handler : IRequestHandler<UsersAsyncQuery, PagedList<UsersAsyncQueryResult>>
         {
             private readonly IMapper _mapper;
             private readonly DataContext _dataContext;
@@ -31,18 +32,19 @@ public class GetUsersAsync
                 _dataContext = dataContext;
             }
 
-            public async Task<IEnumerable<UsersAsyncQueryResult>> Handle(UsersAsyncQuery request,
+            public async Task<PagedList<UsersAsyncQueryResult>> Handle(UsersAsyncQuery request,
                 CancellationToken cancellationToken)
             {
-                var user = await _dataContext.Users
-                    .ToListAsync(cancellationToken);
-                if (user == null)
+                var userQuery = _dataContext.Users
+                    .ProjectTo<UsersAsyncQueryResult>(_mapper.ConfigurationProvider)
+                    .AsNoTracking();
+                if (userQuery == null)
                 {
                     throw new NoUsersFoundException();
                 }
 
-                var result = _mapper.Map<IEnumerable<UsersAsyncQueryResult>>(user);
-                return result;
+                var users= await PagedList<UsersAsyncQueryResult>.CreateAsync(userQuery, request.PageNumber, request.PageSize);
+                return users;
 
             }
         }

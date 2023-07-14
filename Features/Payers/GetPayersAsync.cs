@@ -13,7 +13,7 @@ public class GetPayersAsync
     public class GetPayersAsyncQueryResult
     {
         public Guid Id { get; set; }
-        public string Fullname { get; set; }
+        public string fullname { get; set; }
         public string GroupCode { get; set; }
         public string GroupName { get; set; }
         public int Balance { get; set; }
@@ -34,9 +34,10 @@ public class GetPayersAsync
             var payers = await _context.Payers
                 .Include(groups => groups.Groups)
                 .ToListAsync(cancellationToken: cancellationToken);
-            if (payers == null)
+         
+            if (!payers.Any())
                 throw new NoPayersFoundException();
-
+         
             var result = _mapper.Map<IEnumerable<GetPayersAsyncQueryResult>>(payers);
             return result;
         }
