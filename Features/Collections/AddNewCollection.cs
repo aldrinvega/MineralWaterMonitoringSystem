@@ -5,7 +5,7 @@ using MineralWaterMonitoring.Domain;
 
 namespace MineralWaterMonitoring.Features.Collections;
 
-public class AddNewCollection
+public abstract class AddNewCollection
 {
   public class AddNewCollectionCommand : IRequest<Unit>
   {
@@ -22,7 +22,7 @@ public class AddNewCollection
     }
     public async Task<Unit> Handle(AddNewCollectionCommand command, CancellationToken cancellationToken)
     {
-      var collection = new Collection()
+      var collection = new Collection
       {
         GroupId = command.GroupId,
         CollectionAmount = command.CollectionAmount

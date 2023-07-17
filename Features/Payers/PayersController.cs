@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MineralWaterMonitoring.Common;
 using MineralWaterMonitoring.Features.Payers.Exceptions;
@@ -7,7 +8,7 @@ namespace MineralWaterMonitoring.Features.Payers;
 
 [Route("api/[controller]")]
 [ApiController]
-
+[Authorize]
 public class PayersController : ControllerBase
 {
    private readonly IMediator _mediator;

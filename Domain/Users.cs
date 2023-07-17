@@ -4,7 +4,7 @@ namespace MineralWaterMonitoring.Domain;
 
 public class Users
 {
-    [Column("UserId")] public Guid Id { get; set; }
+    [Column("user_id")] public Guid Id { get; set; }
     public string FullName { get; set; }
     public string UserName { get; set; }
     public string Password { get; set; }

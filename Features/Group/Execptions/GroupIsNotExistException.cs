@@ -1,4 +1,4 @@
-﻿namespace MineralWaterMonitoring.Features.Payers.Exceptions;
+﻿namespace MineralWaterMonitoring.Features.Group.Execptions;
 
 public class GroupIsNotExistException : Exception
 {

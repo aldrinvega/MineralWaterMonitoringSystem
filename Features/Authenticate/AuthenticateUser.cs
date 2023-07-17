@@ -4,29 +4,31 @@ using System.Security.Claims;
 using System.Text;
 using AutoMapper;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MineralWaterMonitoring.Data;
 using MineralWaterMonitoring.Features.Users.Exceptions;
-using NuGet.Protocol;
 
 namespace MineralWaterMonitoring.Features.Authenticate;
 
-public class AuthenticateUser
+public abstract class AuthenticateUser
 {
     public class AuthenticateUserQuery : IRequest<AuthenticateUserResult>
     {
+        public AuthenticateUserQuery(string password, string username)
+        {
+            Password = password;
+            Username = username;
+        }
+
         [Required]
         public string Username
         {
             get;
-            set;
         }
         [Required]
         public string Password
         {
             get;
-            set;
         }
     }
 
@@ -51,24 +53,6 @@ public class AuthenticateUser
         }
 
         public string Password
-        {
-            get;
-            set;
-        }
-
-        public Guid GroupId
-        {
-            get;
-            set;
-        }
-
-        public string GroupCode
-        {
-            get;
-            set;
-        }
-
-        public string GroupName
         {
             get;
             set;
@@ -117,15 +101,19 @@ public class AuthenticateUser
             private string GenerateJwtToken(Domain.Users user)
             {
                 var key = _configuration.GetValue<string>("JwtConfig:Key");
+                var audience = _configuration.GetValue<string>("JwtConfig:Audience");
+                var issuer = _configuration.GetValue<string>("JwtConfig:Issuer");
                 var keyBytes = Encoding.ASCII.GetBytes(key);
                 var tokenHandler = new JwtSecurityTokenHandler();
-                var tokenDescriptor = new SecurityTokenDescriptor()
+                var tokenDescriptor = new SecurityTokenDescriptor
                 {
-                    Subject = new ClaimsIdentity(new Claim[]
+                    Subject = new ClaimsIdentity(new[]
                     {
                         new Claim("id", user.Id.ToString())
                     }),
                     Expires = DateTime.UtcNow.AddDays(1),
+                    Issuer = issuer,
+                    Audience = audience,
                     SigningCredentials = new SigningCredentials(
                         new SymmetricSecurityKey(keyBytes), SecurityAlgorithms.HmacSha256Signature)
                 };

@@ -1,8 +1,9 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using MineralWaterMonitoring.Data;
+using MineralWaterMonitoring.Features.Payers.Exceptions;
 
-namespace MineralWaterMonitoring.Features.Payers.Exceptions;
+namespace MineralWaterMonitoring.Features.Payers;
 
 public class AddCash
 {

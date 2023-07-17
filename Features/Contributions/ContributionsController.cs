@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MineralWaterMonitoring.Common;
 using MineralWaterMonitoring.Common.Extension;
@@ -8,7 +9,7 @@ namespace MineralWaterMonitoring.Features.Contributions;
 
 [Route("api/[controller]")]
 [ApiController]
-
+[Authorize]
 public class ContributionsController : ControllerBase
 {
     private readonly IMediator _mediator;

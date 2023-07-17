@@ -24,25 +24,31 @@ namespace MineralWaterMonitoring.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)")
-                        .HasColumnName("CollectionId");
+                        .HasColumnName("collection_id");
 
                     b.Property<int>("CollectionAmount")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("collection_amount");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("created_at");
 
                     b.Property<Guid>("GroupId")
-                        .HasColumnType("char(36)");
+                        .HasColumnType("char(36)")
+                        .HasColumnName("group_id");
 
                     b.Property<string>("Status")
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("status");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_collections");
 
-                    b.HasIndex("GroupId");
+                    b.HasIndex("GroupId")
+                        .HasDatabaseName("ix_collections_group_id");
 
-                    b.ToTable("Collections");
+                    b.ToTable("collections", (string)null);
                 });
 
             modelBuilder.Entity("MineralWaterMonitoring.Domain.Contributions", b =>
@@ -50,27 +56,34 @@ namespace MineralWaterMonitoring.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)")
-                        .HasColumnName("ContributionId");
+                        .HasColumnName("contribution_id");
 
                     b.Property<Guid>("CollectionId")
-                        .HasColumnType("char(36)");
+                        .HasColumnType("char(36)")
+                        .HasColumnName("collection_id");
 
                     b.Property<int>("ContributionAmount")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("contribution_amount");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("created_at");
 
                     b.Property<Guid>("PayerId")
-                        .HasColumnType("char(36)");
+                        .HasColumnType("char(36)")
+                        .HasColumnName("payer_id");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_contributions");
 
-                    b.HasIndex("CollectionId");
+                    b.HasIndex("CollectionId")
+                        .HasDatabaseName("ix_contributions_collection_id");
 
-                    b.HasIndex("PayerId");
+                    b.HasIndex("PayerId")
+                        .HasDatabaseName("ix_contributions_payer_id");
 
-                    b.ToTable("Contributions");
+                    b.ToTable("contributions", (string)null);
                 });
 
             modelBuilder.Entity("MineralWaterMonitoring.Domain.Groups", b =>
@@ -78,20 +91,24 @@ namespace MineralWaterMonitoring.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)")
-                        .HasColumnName("GroupId");
+                        .HasColumnName("group_id");
 
                     b.Property<DateTime>("DateAdded")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("date_added");
 
                     b.Property<string>("GroupCode")
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("group_code");
 
                     b.Property<string>("GroupName")
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("group_name");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_groups");
 
-                    b.ToTable("Groups");
+                    b.ToTable("groups", (string)null);
                 });
 
             modelBuilder.Entity("MineralWaterMonitoring.Domain.Payers", b =>
@@ -99,25 +116,31 @@ namespace MineralWaterMonitoring.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)")
-                        .HasColumnName("PayerId");
+                        .HasColumnName("payer_id");
 
                     b.Property<int>("Balance")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("balance");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("created_at");
 
                     b.Property<string>("Fullname")
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("fullname");
 
                     b.Property<Guid>("GroupId")
-                        .HasColumnType("char(36)");
+                        .HasColumnType("char(36)")
+                        .HasColumnName("group_id");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_payers");
 
-                    b.HasIndex("GroupId");
+                    b.HasIndex("GroupId")
+                        .HasDatabaseName("ix_payers_group_id");
 
-                    b.ToTable("Payers");
+                    b.ToTable("payers", (string)null);
                 });
 
             modelBuilder.Entity("MineralWaterMonitoring.Domain.Users", b =>
@@ -125,23 +148,28 @@ namespace MineralWaterMonitoring.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)")
-                        .HasColumnName("UserId");
+                        .HasColumnName("user_id");
 
                     b.Property<string>("FullName")
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("full_name");
 
                     b.Property<string>("Password")
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("password");
 
                     b.Property<bool>("Status")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("tinyint(1)")
+                        .HasColumnName("status");
 
                     b.Property<string>("UserName")
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("user_name");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_users");
 
-                    b.ToTable("Users");
+                    b.ToTable("users", (string)null);
                 });
 
             modelBuilder.Entity("MineralWaterMonitoring.Domain.Collection", b =>
@@ -150,7 +178,8 @@ namespace MineralWaterMonitoring.Migrations
                         .WithMany("Collection")
                         .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_collections_groups_group_id");
 
                     b.Navigation("Groups");
                 });
@@ -161,13 +190,15 @@ namespace MineralWaterMonitoring.Migrations
                         .WithMany()
                         .HasForeignKey("CollectionId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_contributions_collections_collection_id");
 
                     b.HasOne("MineralWaterMonitoring.Domain.Payers", "Payer")
                         .WithMany("Contributions")
                         .HasForeignKey("PayerId")
                         .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_contributions_payers_payer_id");
 
                     b.Navigation("Collection");
 
@@ -180,7 +211,8 @@ namespace MineralWaterMonitoring.Migrations
                         .WithMany("Payers")
                         .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_payers_groups_group_id");
 
                     b.Navigation("Groups");
                 });

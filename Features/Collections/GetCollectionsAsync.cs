@@ -6,7 +6,7 @@ using MineralWaterMonitoring.Features.Collections.Exceptions;
 
 namespace MineralWaterMonitoring.Features.Collections;
 
-public class GetCollectionsAsync
+public abstract class GetCollectionsAsync
 {
     public class GetCollectionsAsyncQuery : IRequest<IEnumerable<GetCollectionsAsyncQueryResult>> { }
 

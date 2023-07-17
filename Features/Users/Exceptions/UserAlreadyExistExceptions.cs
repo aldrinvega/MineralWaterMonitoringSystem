@@ -1,4 +1,4 @@
-﻿namespace MineralWaterMonitoring.Features.Exceptions;
+﻿namespace MineralWaterMonitoring.Features.Users.Exceptions;
 
 public class UserAlreadyExistExceptions : Exception
 {

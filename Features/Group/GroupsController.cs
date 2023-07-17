@@ -1,15 +1,15 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MineralWaterMonitoring.Common;
 using MineralWaterMonitoring.Common.Extension;
 using MineralWaterMonitoring.Common.Pagination;
-using NuGet.Protocol;
 
 namespace MineralWaterMonitoring.Features.Group;
 
 [Route("api/[controller]")]
 [ApiController]
-
+[Authorize]
 public class GroupsController : ControllerBase
 {
     private readonly IMediator _mediator;

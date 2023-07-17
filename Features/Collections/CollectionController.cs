@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MineralWaterMonitoring.Common;
 
@@ -6,7 +7,7 @@ namespace MineralWaterMonitoring.Features.Collections;
 
 [Route("api/[controller]")]
 [ApiController]
-
+[Authorize]
 public class CollectionController : ControllerBase
 {
     private readonly IMediator _mediator;

@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using MineralWaterMonitoring.Data;
+using MineralWaterMonitoring.Features.Group.Execptions;
 using MineralWaterMonitoring.Features.Payers.Exceptions;
 
 namespace MineralWaterMonitoring.Features.Payers;

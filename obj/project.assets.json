@@ -75,6 +75,20 @@
           }
         }
       },
+      "EFCore.NamingConventions/7.0.2": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "[7.0.2, 8.0.0)",
+          "Microsoft.EntityFrameworkCore.Relational": "[7.0.2, 8.0.0)",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "7.0.0"
+        },
+        "compile": {
+          "lib/net6.0/EFCore.NamingConventions.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/EFCore.NamingConventions.dll": {}
+        }
+      },
       "Google.Protobuf/3.21.9": {
         "type": "package",
         "compile": {
@@ -4124,6 +4138,18 @@
         "azureicon.png",
         "lib/netstandard2.0/Azure.Identity.dll",
         "lib/netstandard2.0/Azure.Identity.xml"
+      ]
+    },
+    "EFCore.NamingConventions/7.0.2": {
+      "sha512": "zJz6+YohdMHBFwi54RyH4bWMVTV6qHhIkGl7TWDyVE7HfOxM0gCux9cDg8yCTmG2ie99yY8XYlIaTGl/TNMnnQ==",
+      "type": "package",
+      "path": "efcore.namingconventions/7.0.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "efcore.namingconventions.7.0.2.nupkg.sha512",
+        "efcore.namingconventions.nuspec",
+        "lib/net6.0/EFCore.NamingConventions.dll"
       ]
     },
     "Google.Protobuf/3.21.9": {
@@ -11671,6 +11697,7 @@
     "net7.0": [
       "AutoMapper >= 12.0.1",
       "AutoMapper.Extensions.Microsoft.DependencyInjection >= 12.0.1",
+      "EFCore.NamingConventions >= 7.0.2",
       "MediatR >= 12.0.1",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 7.0.5",
       "Microsoft.AspNetCore.OpenApi >= 7.0.4",
@@ -11740,6 +11767,10 @@
           "AutoMapper.Extensions.Microsoft.DependencyInjection": {
             "target": "Package",
             "version": "[12.0.1, )"
+          },
+          "EFCore.NamingConventions": {
+            "target": "Package",
+            "version": "[7.0.2, )"
           },
           "MediatR": {
             "target": "Package",

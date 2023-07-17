@@ -2,9 +2,9 @@
 
 namespace MineralWaterMonitoring.Domain;
 
-public class Collection
+public sealed class Collection
 {
-    [Column("CollectionId")]
+    [Column("collection_id")]
     public Guid Id { get; set; }
 
     public DateTime CreatedAt { get; set; } = DateTime.Now;
@@ -12,5 +12,5 @@ public class Collection
     public Guid GroupId { get; set; }
     public int CollectionAmount { get; set; }
     public string Status { get; set; }
-    public virtual Groups Groups { get; set; }
+    public Groups Groups { get; set; }
 }

@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using MineralWaterMonitoring.Common;
@@ -9,7 +10,7 @@ namespace MineralWaterMonitoring.Features.Users;
 
 [Route("api/[controller]")]
 [ApiController]
-
+[Authorize]
 public class UserController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -38,6 +39,7 @@ public class UserController : ControllerBase
     }
 
     [HttpGet("GetAllUsers")]
+    [Authorize]
     public async Task<IActionResult> GetAllUsersAsync([FromQuery] UserParams userParams)
     {
         try

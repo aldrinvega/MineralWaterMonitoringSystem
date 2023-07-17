@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using MineralWaterMonitoring.Data;
-using MineralWaterMonitoring.Features.Exceptions;
+using MineralWaterMonitoring.Features.Users.Exceptions;
 
 namespace MineralWaterMonitoring.Features.Users;
 

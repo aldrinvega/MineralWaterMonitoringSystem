@@ -12,14 +12,14 @@ namespace MineralWaterMonitoring.Common.Pagination
             TotalCount = count;
             AddRange(items);
         }
-        public int CurrentPage { get; set; }
-        public int TotalPages { get; set; }
-        public int PageSize { get; set; }
-        public int TotalCount { get; set; }
+        public int CurrentPage { get;}
+        public int TotalPages { get; }
+        public int PageSize { get;}
+        public int TotalCount { get;}
 
-        public bool HasPreviousPage => (CurrentPage > 1);
+        public bool HasPreviousPage => CurrentPage > 1;
 
-        public bool HasNextPage => (CurrentPage < TotalPages);
+        public bool HasNextPage => CurrentPage < TotalPages;
 
         public static async Task<PagedList<T>> CreateAsync
                                 (IQueryable<T> source, int pageNumber, int pageSize)

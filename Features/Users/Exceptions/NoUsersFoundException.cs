@@ -2,5 +2,5 @@
 
 public class NoUsersFoundException : Exception
 {
-    public NoUsersFoundException() : base($"No user(s) found"){}
+    public NoUsersFoundException() : base("No user(s) found"){}
 }

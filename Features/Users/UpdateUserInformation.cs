@@ -36,7 +36,7 @@ public class UpdateUserInformation
 
         public class Handler : IRequestHandler<UpdateUserInformationCommand, Unit>
         {
-            private DataContext _context;
+            private readonly DataContext _context;
 
             public Handler(DataContext context)
             {

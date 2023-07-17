@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "5niz6nu0N8PzVgHhYZh2ntQRV1BZvMMwyK22NfK0uMFVb2BDPPdVioZo22K0SQBdajO0ANflPsKpv37TU9Bbpg==",
+  "dgSpecHash": "je7DT7uls1Epmo0Fq2yRPpuGWIplbK0fdQvQ6RP34o4UrbshutiNYkxsIXWAIMxKRHGHZvWEE8IZ4An7cWFbww==",
   "success": true,
   "projectFilePath": "C:\\Users\\avega\\source\\repos\\MineralWaterMonitoring\\MineralWaterMonitoring.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,7 @@
     "C:\\Users\\avega\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
     "C:\\Users\\avega\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\avega\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
+    "C:\\Users\\avega\\.nuget\\packages\\efcore.namingconventions\\7.0.2\\efcore.namingconventions.7.0.2.nupkg.sha512",
     "C:\\Users\\avega\\.nuget\\packages\\google.protobuf\\3.21.9\\google.protobuf.3.21.9.nupkg.sha512",
     "C:\\Users\\avega\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\avega\\.nuget\\packages\\k4os.compression.lz4\\1.3.5\\k4os.compression.lz4.1.3.5.nupkg.sha512",

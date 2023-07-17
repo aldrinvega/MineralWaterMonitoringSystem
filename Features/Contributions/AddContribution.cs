@@ -32,7 +32,7 @@ public class AddContribution
                 throw new Exception("Amount is already collected");
             }
             
-            var contributions = new Domain.Contributions()
+            var contributions = new Domain.Contributions
             {
                 CollectionId = command.CollectionId,
                 PayerId = command.PayerId,

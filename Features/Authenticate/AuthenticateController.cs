@@ -18,6 +18,7 @@ public class AuthenticateController : ControllerBase
 
     [AllowAnonymous]
     [HttpPost("Authenticate")]
+    
     public async Task<ActionResult<AuthenticateUser.AuthenticateUserResult>> Authenticate(AuthenticateUser.AuthenticateUserQuery request)
     {
 
@@ -26,6 +27,7 @@ public class AuthenticateController : ControllerBase
         {
             // var query = new AuthenticateUser.AuthenticateUserQuery();
             var result = await _mediator.Send(request);
+            response.Success = true;
             response.Data = result;
             return Ok(response);
         }
