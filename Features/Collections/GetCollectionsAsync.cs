@@ -39,8 +39,8 @@ public abstract class GetCollectionsAsync
                 .ToListAsync(cancellationToken);
 
             if (collections == null) throw new NoCollectionFoundExceptions();
-            var result = _mapper.Map<IEnumerable<GetCollectionsAsyncQueryResult>>(collections);
-            return result;
+            return _mapper.Map<IEnumerable<GetCollectionsAsyncQueryResult>>(collections);
+            
         }
     }
 }

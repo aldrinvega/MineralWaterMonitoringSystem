@@ -62,7 +62,6 @@ public abstract class AuthenticateUser
             get;
             set;
         }
-
         public AuthenticateUserResult(Domain.Users user, string token)
         {
             Id = user.Id;
@@ -94,7 +93,7 @@ public abstract class AuthenticateUser
                     throw new NoUsersFoundException();
                 var token = GenerateJwtToken(user);
                 var result = new AuthenticateUserResult(user, token);
-                var results = _mapper.Map<AuthenticateUserResult>(result) ;
+                var results = _mapper.Map<AuthenticateUserResult>(result);
                 return Task.FromResult(results);
             }
 
@@ -115,7 +114,8 @@ public abstract class AuthenticateUser
                     Issuer = issuer,
                     Audience = audience,
                     SigningCredentials = new SigningCredentials(
-                        new SymmetricSecurityKey(keyBytes), SecurityAlgorithms.HmacSha256Signature)
+                        new SymmetricSecurityKey(keyBytes), 
+                        SecurityAlgorithms.HmacSha256Signature)
                 };
                 var token = tokenHandler.CreateToken(tokenDescriptor);
                 return tokenHandler.WriteToken(token);

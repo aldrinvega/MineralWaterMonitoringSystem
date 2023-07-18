@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MineralWaterMonitoring.Common;
@@ -7,16 +8,12 @@ namespace MineralWaterMonitoring.Features.Collections;
 
 [Route("api/[controller]")]
 [ApiController]
-[Authorize]
-public class CollectionController : ControllerBase
+public class CollectionController : BaseController
 {
-    private readonly IMediator _mediator;
-
-    public CollectionController(IMediator mediator)
+    public CollectionController(IMediator mediator, IMapper mapper) : base(mediator, mapper)
     {
-        _mediator = mediator;
     }
-
+    
     [HttpPost("CreateNewCollection")]
     public async Task<IActionResult> CreateNewCollection(AddNewCollection.AddNewCollectionCommand command)
     {
@@ -35,23 +32,9 @@ public class CollectionController : ControllerBase
     }
 
     [HttpGet(Name = "GetCollectionAsync")]
-    public async Task<ActionResult<IEnumerable<GetCollectionsAsync.GetCollectionsAsyncQueryResult>>>
-        GetCollectionsAsync()
+    public async Task<IActionResult> GetCollectionsAsync()
     {
-        var response = new QueryOrCommandResult<IEnumerable<GetCollectionsAsync.GetCollectionsAsyncQueryResult>>();
-        try
-        {
-            var query = new GetCollectionsAsync.GetCollectionsAsyncQuery();
-            var result = await _mediator.Send(query);
-            response.Success = true;
-            response.Data = result;
-            return Ok(response);
-        }
-        catch (Exception e)
-        { 
-            response.Success = false;
-            response.Messages.Add(e.Message);
-            return Conflict(response);
-        }
+        return await Handle<IEnumerable<GetCollectionsAsync.GetCollectionsAsyncQueryResult>>(
+            new GetCollectionsAsync.GetCollectionsAsyncQuery());
     }
 }
