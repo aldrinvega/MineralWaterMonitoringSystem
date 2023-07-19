@@ -293,3 +293,4 @@ C:\Users\avega\source\repos\MineralWaterMonitoring\bin\Debug\net7.0\runtimes\win
 C:\Users\avega\source\repos\MineralWaterMonitoring\bin\Debug\net7.0\runtimes\win-x64\native\krb5_64.dll
 C:\Users\avega\source\repos\MineralWaterMonitoring\bin\Debug\net7.0\runtimes\win-x64\native\krbcc64.dll
 C:\Users\avega\source\repos\MineralWaterMonitoring\bin\Debug\net7.0\EFCore.NamingConventions.dll
+C:\Users\avega\source\repos\MineralWaterMonitoring\bin\Debug\net7.0\MediatR.Extensions.Microsoft.DependencyInjection.dll

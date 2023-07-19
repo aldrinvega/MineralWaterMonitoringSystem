@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "TRbps/Arf7r9g5BPBUlxrG2ukbtLpb6IgYVO5zy08caKPLg9euOCyLn2CfrknK9cEH6/BYYt8fe92QSFxGA/Dg==",
+  "dgSpecHash": "1sf6JQPOGioFRJ2hwjtnhyStslFuBk88knlGRxlJieo1vXFCebFxamMFrpj2ZOfsLt16aQ+E5pUKLtbfC2i7PQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\avega\\source\\repos\\MineralWaterMonitoring\\MineralWaterMonitoring.csproj",
   "expectedPackageFiles": [
@@ -16,6 +16,7 @@
     "C:\\Users\\avega\\.nuget\\packages\\k4os.hash.xxhash\\1.0.8\\k4os.hash.xxhash.1.0.8.nupkg.sha512",
     "C:\\Users\\avega\\.nuget\\packages\\mediatr\\12.0.1\\mediatr.12.0.1.nupkg.sha512",
     "C:\\Users\\avega\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512",
+    "C:\\Users\\avega\\.nuget\\packages\\mediatr.extensions.microsoft.dependencyinjectionfixed\\5.1.2\\mediatr.extensions.microsoft.dependencyinjectionfixed.5.1.2.nupkg.sha512",
     "C:\\Users\\avega\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\7.0.5\\microsoft.aspnetcore.authentication.jwtbearer.7.0.5.nupkg.sha512",
     "C:\\Users\\avega\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.4\\microsoft.aspnetcore.openapi.7.0.4.nupkg.sha512",
     "C:\\Users\\avega\\.nuget\\packages\\microsoft.aspnetcore.razor.language\\6.0.11\\microsoft.aspnetcore.razor.language.6.0.11.nupkg.sha512",
